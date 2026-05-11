@@ -5,7 +5,7 @@ import WorkCard from "./WorkCards";
 import huawei from "../../Assets/Work/Huawei.png";
 import ittiam from "../../Assets/Work/ittiam.png";
 import tamu from "../../Assets/Work/tamu.png";
-import goldman from "../../Assets/Work/goldman.png";
+import goldman from "../../Assets/Work/Goldman_Sachs.png";
 
 function About() {
   return (
