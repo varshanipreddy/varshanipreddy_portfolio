@@ -6,7 +6,6 @@ import About from "./components/About/About";
 import Projects from "./components/Projects/Projects";
 import Awards from "./components/Awards/Awards"
 import Footer from "./components/Footer";
-import Resume from "./components/Resume/ResumeNew";
 import Education from "./components/Education/Education";
 import Work from "./components/Work/Work"
 import Skills from "./components/Skills/Skills"
@@ -43,7 +42,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/project" element={<Projects />} />
           <Route path="/about" element={<About />} />
-          <Route path="/resume" element={<Resume />} />
           <Route path="/education" element={<Education />} />
           <Route path="/work" element={<Work />} />
           <Route path="/skills" element={<Skills />} />

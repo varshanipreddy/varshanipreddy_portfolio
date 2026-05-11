@@ -5,6 +5,7 @@ import WorkCard from "./WorkCards";
 import huawei from "../../Assets/Work/Huawei.png";
 import ittiam from "../../Assets/Work/ittiam.png";
 import tamu from "../../Assets/Work/tamu.png";
+import goldman from "../../Assets/Work/goldman.png";
 
 function About() {
   return (
@@ -14,6 +15,19 @@ function About() {
       <h1 className="project-heading">
           Work <strong className="purple">Experience </strong>
         </h1>
+          <Row style={{ justifyContent: "center", padding: "10px" }}>
+            <Col md={9} className="work-card">
+              <WorkCard
+                imgPath={goldman}
+                isBlog={false}
+                title="Goldman Sachs"
+                title2 = "Associate [Software Engineer]"
+                title3 = "September 2024 - Present"
+                // description= "Department: SOC/Consumer Cloud Service Competence Center. Risk Control Tag Development: Development, analysis and deployment of various Payment Risk Control Tags in HiveQL by querying datasets stored in the HDFS. Offline machine learning models/ Scoring Systems: Design, analysis, development and deployment of around 10 risk detection models and scoring systems with greater than 92% accuracy. AI Devops: Troubleshooted issues related to data synchronisation from the HIVE datasets HDFS path to the DevOps HDFS path, MTP model training issues and MEP model deployment issues in the new AIdevops portal. Handled communication between several teams for troubleshooting of models deployment involving several tools such as CloudDragon, AIdevops etc.,"
+                description = "Developed parallelized Data Ingestion pipelines in Python for streaming security telemetry (Prisma, Microsoft Graph, Servicenow etc.) via API endpoints into Kafka, with pagination, delivery callbacks, and DLQ retries to reliably process billions of events in real time. Developed a React app that injects synthetic events into Kafka for testing, speeding up detection query validation by 60%. Designed and implemented a Spark-based SDLC framework using Python to deploy batch and streaming SQL detection queries on Kafka/S3, with jobs running on YARN/Kubernetes, automating detection deployments and improving deployment speed by 100%. Built a Spark Structured Streaming ETL pipeline on YARN to ingest and normalize unstructured data from Kafka, applying schema enforcement, de-duplication, and noise filtering to improve query reliability by 30% and reduce false positives by 20%. Migrated Splunk logs to Google BigQuery using Kafka and Logstash, and built a framework to automate lookup table sync from ECS to BigQuery, reducing manual effort by 70% and ensuring consistent deployments."
+              />
+            </Col>
+        </Row>
         <Row style={{ justifyContent: "center", padding: "10px" }}>
             <Col md={9} className="work-card">
               <WorkCard
