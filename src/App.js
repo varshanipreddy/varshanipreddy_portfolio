@@ -11,7 +11,7 @@ import Work from "./components/Work/Work"
 import Skills from "./components/Skills/Skills"
 import Certs from "./components/Certs/Certs"
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Route,
   Routes,
   Navigate
