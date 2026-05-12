@@ -8,14 +8,15 @@ function AboutCard() {
       <Card.Body>
         <blockquote className="blockquote mb-0">
           <p style={{ textAlign: "justify" }}>
-            Howdy, I am <strong className="purple">Varshani Reddy </strong>
+            Hello, I am <strong className="purple">Varshani Reddy</strong>.
             <br/>
-            <br />I am Currently pursuing Masters in Computer Science at <strong className="purple">Texas A&M University</strong> College Station.
+            <br />I’m a software engineer driven by curiosity and a love for solving problems. I’m always looking for new challenges that push me to learn, think deeper, and grow.
             <br/>
-            <br />I worked for a couple of years as a Senior Software Engineer at <strong className="purple">Huawei</strong> Technologies India. Pvt. Ltd.
-            <br />
+            <br />I enjoy breaking down complex ideas, brainstorming creative solutions, and building things that can create meaningful real-world impact.
             <br/>
-            Apart from coding, some of my other interests are:
+            <br />For me, every day is an opportunity to learn something new, improve my craft, and contribute in my own way to building a better world.
+            <br/>
+            <br />Apart from coding, some of my other interests are:
           </p>
           <ul>
             <li className="about-activity">
