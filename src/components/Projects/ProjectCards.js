@@ -94,17 +94,8 @@ function ProjectCards({
             </div>
           ) : null}
 
-          <div className="project-card-actions">
-            <a
-              href={ghLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="project-card-btn project-card-btn--github"
-            >
-              <BsGithub aria-hidden />
-              {isBlog ? "Blog" : "GitHub"}
-            </a>
-            {!isBlog && demoLink ? (
+          {!isBlog && demoLink ? (
+            <div className="project-card-actions">
               <a
                 href={demoLink}
                 target="_blank"
@@ -114,8 +105,8 @@ function ProjectCards({
                 <CgWebsite aria-hidden />
                 Live demo
               </a>
-            ) : null}
-          </div>
+            </div>
+          ) : null}
         </Card.Body>
       </Card>
     </article>
