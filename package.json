@@ -24,7 +24,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "env -u GIT_ASKPASS -u VSCODE_GIT_ASKPASS_NODE -u VSCODE_GIT_ASKPASS_MAIN -u VSCODE_GIT_ASKPASS_EXTRA_ARGS GIT_LFS_SKIP_SMUDGE=1 gh-pages -d build -f",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

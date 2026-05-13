@@ -87,60 +87,40 @@ const WORK_ITEMS = [
     logo: goldmanLogo,
     logoAlt: "Goldman Sachs",
     org: "Goldman Sachs",
-    role: "Associate · Software Engineer",
+    role: "Software Engineer · Data",
     dates: "Sep 2024 — Present",
     blurb:
-      "Security telemetry pipelines into Kafka (Python), Spark streaming and batch detection on YARN/Kubernetes, and Splunk→BigQuery migrations—high volume, tight reliability.",
+      "Parallel Python ingestion into Kafka, Spark batch and streaming on YARN/Kubernetes, a React synthetic-event harness for detections, and Splunk→BigQuery with automated ECS lookups.",
+  },
+  {
+    key: "tamu",
+    logo: tamuAltMark,
+    logoAlt: "Texas A&M University",
+    org: "Texas A&M University",
+    role: "Software Engineer · High Performance Computing",
+    dates: "Jun 2023 — May 2024",
+    blurb:
+      "HPC resource analysis (Grafana, MemVerge), DRAM vs core studies for batch workflows, and campus web on Kentico and C# with Azure DevOps automation in Python.",
   },
   {
     key: "huawei",
     logo: huaweiLogo,
     logoAlt: "Huawei",
     org: "Huawei Technologies India",
-    role: "Senior Software Engineer",
+    role: "Software Engineer · Data",
     dates: "Aug 2020 — Jul 2022",
     blurb:
-      "Hive automation, Python risk models above 92% accuracy, and end-to-end ML DevOps—training, deployment, and production support across WiseOper and AIdevops.",
-  },
-  {
-    key: "tamu-hpc",
-    logo: tamuAltMark,
-    logoAlt: "Texas A&M University",
-    org: "Texas A&M University",
-    role: "Graduate Assistant · High Performance Computing",
-    dates: "Nov 2023 — May 2024",
-    blurb:
-      "Handled HPRC tickets, cluster support, and benchmarking quantum chemistry codes on MemVerge for dependable researcher-facing performance.",
-  },
-  {
-    key: "tamu-campus",
-    logo: tamuAltMark,
-    logoAlt: "Texas A&M University",
-    org: "Texas A&M University",
-    role: "Student technician · Web / tester",
-    dates: "Jul 2023 — Nov 2023",
-    blurb:
-      "Campus web properties on Azure, Kentico, C#, ASP.NET, and IIS—CMS work, releases, and hands-on support for clients.",
-  },
-  {
-    key: "tamu-grade",
-    logo: tamuAltMark,
-    logoAlt: "Texas A&M University",
-    org: "Texas A&M University",
-    role: "Student assistant · CS course grader",
-    dates: "Jan 2023 — May 2023",
-    blurb:
-      "Graded CSCE 411 (Design and Analysis of Algorithms) with Prof. Timothy Davis—fair evaluations and deeper intuition for classic algorithms.",
+      "Hive and Spark at petabyte scale, 15+ risk models with strong F1 scores, Tableau and MLOps workflows, plus scraping and NLP/vision for unstructured signals.",
   },
   {
     key: "ittiam",
     logo: ittiamLogo,
     logoAlt: "Ittiam Systems",
     org: "Ittiam Systems",
-    role: "Computer Vision Intern",
+    role: "Software Engineering Intern",
     dates: "May 2019 — Jul 2019",
     blurb:
-      "Foreground/background modeling in video with OpenCV—histogram-based motion cues and a large accuracy jump on internal datasets.",
+      "Python and C++ video preprocessing with OpenCV—multi-model GMM foreground/background, shadow removal, and faster analysis pipelines.",
   },
 ];
 

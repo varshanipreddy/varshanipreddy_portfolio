@@ -1,4 +1,10 @@
-import React from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Particle from "../Particle";
 import WorkCard from "./WorkCards";
@@ -7,112 +13,392 @@ import ittiam from "../../Assets/Work/ittiam.png";
 import tamu from "../../Assets/Work/tamu.png";
 import goldman from "../../Assets/Work/Goldman_Sachs.png";
 
-function About() {
+const EXPERIENCES = [
+  {
+    key: "gs",
+    imgPath: goldman,
+    title: "Goldman Sachs",
+    title2: "Software Engineer · Data",
+    title3: "September 2024 — Present",
+    tags: [
+      "Python",
+      "Kafka",
+      "React",
+      "Spark",
+      "YARN",
+      "Kubernetes",
+      "BigQuery",
+      "Splunk",
+    ],
+    bullets: [
+      "Developed parallelized data ingestion pipelines in Python for streaming security telemetry (Prisma, Microsoft Graph, ServiceNow, and similar sources) via API endpoints into Kafka, with pagination, delivery callbacks, and DLQ retries to reliably process billions of events in real time.",
+      "Developed a React app that injects synthetic events into Kafka for testing, speeding up detection query validation by about 60%.",
+      "Designed and implemented a Spark-based SDLC framework in Python to deploy batch and streaming SQL detection queries on Kafka and S3, with jobs on YARN and Kubernetes—automating detection deployments and roughly doubling deployment speed.",
+      "Built a Spark Structured Streaming ETL pipeline on YARN to ingest and normalize unstructured data from Kafka, with schema enforcement, de-duplication, and noise filtering—improving query reliability by about 30% and reducing false positives by about 20%.",
+      "Migrated Splunk logs to Google BigQuery using Kafka and Logstash, and built a framework to automate lookup table sync from ECS to BigQuery—cutting manual effort by about 70% and keeping deployments consistent.",
+    ],
+  },
+  {
+    key: "tamu",
+    imgPath: tamu,
+    title: "Texas A&M University",
+    title2: "Software Engineer · High Performance Computing",
+    title3: "June 2023 — May 2024",
+    tags: [
+      "HPC",
+      "Grafana",
+      "MemVerge",
+      "Kentico",
+      "C#",
+      "Azure DevOps",
+      "Python",
+    ],
+    bullets: [
+      "Analyzed CPU and memory usage in parallel batch workflows on HPC nodes using ps, free, meminfo, mvmcli, jobstats, and Grafana—reducing memory allocation by about 50% on MemVerge nodes.",
+      "Reduced DRAM bottlenecks by comparing CPU nodes with DRAM up to 3 TB and up to 96 cores; added data visualizations for real-time resource utilization to shorten future analysis cycles.",
+      "Managed university websites on Kentico CMS with access control, PBIs, and migrations in C#. Built Python automation on the Azure DevOps API, cutting manual work by about 40%.",
+    ],
+  },
+  {
+    key: "huawei",
+    imgPath: huawei,
+    title: "Huawei Technologies India Pvt. Ltd.",
+    title2: "Software Engineer · Data",
+    title3: "August 2020 — July 2022",
+    tags: [
+      "Python",
+      "SQL",
+      "Hive",
+      "Spark",
+      "Tableau",
+      "ML",
+      "MLOps",
+    ],
+    bullets: [
+      "Used Python and SQL on Hive to analyze warehouse data and designed 15 data models with over 2,000 attributes for payment and account risk detection; engineered 50 distinct features for a rule engine to catch fraudulent payments.",
+      "Orchestrated hundreds of ETL-style processes for predictive modeling in Hive and Spark at petabyte scale (Airflow-like tooling), with preprocessing and cleaning for feature engineering and statistical mining to lift model performance.",
+      "Developed 15 predictive models with F1-scores above 0.91 for payment and account risk, using clustering, regression, tree ensembles, Random Forests, XGBoost, and other ensemble methods.",
+      "Used Python visualization libraries to interpret model predictions and drivers for payment risk—raising model efficiency by about 20%—and added Tableau dashboards for fraud analytics stakeholders.",
+      "Partnered across functions to stand up MLOps configuration and data sync workflows, improving model development efficiency by over 60%; delivered 20+ components to operate production services.",
+      "Built web scraping with Selenium and Python for unstructured data; applied deep learning and NLP (tokenization, POS tagging, sentiment, RNNs, CNNs, transformers) to flag risky content in images and text.",
+    ],
+  },
+  {
+    key: "ittiam",
+    imgPath: ittiam,
+    title: "Ittiam Systems Pvt. Ltd.",
+    title2: "Software Engineering Intern",
+    title3: "May 2019 — July 2019",
+    tags: ["Python", "C++", "OpenCV", "Computer vision"],
+    bullets: [
+      "Developed a Python and C++ video processing library that cut analysis and preprocessing time by about 50%.",
+      "Implemented multi-model Gaussian foreground and background separation for surveillance video—histograms, GMM segmentation, and shadow removal in OpenCV—reducing noise by about 15%.",
+    ],
+  },
+];
+
+function useRevealOnce(threshold = 0.2, rootMargin = "0px 0px -5% 0px") {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setVisible(true);
+        });
+      },
+      { threshold, rootMargin }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold, rootMargin]);
+  return [ref, visible];
+}
+
+function scrollToRole(anchorId) {
+  if (typeof document === "undefined") return;
+  const el = document.getElementById(anchorId);
+  if (!el) return;
+  const reduce =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  el.scrollIntoView({
+    behavior: reduce ? "auto" : "smooth",
+    block: "center",
+  });
+}
+
+function clamp01(n) {
+  return Math.max(0, Math.min(1, n));
+}
+
+function useTimelineLineDrawn(timelineRef) {
+  const [lineDrawn, setLineDrawn] = useState(false);
+  useEffect(() => {
+    const el = timelineRef.current;
+    if (!el) return undefined;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setLineDrawn(true);
+        });
+      },
+      { threshold: 0.05, rootMargin: "0px 0px -10% 0px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [timelineRef]);
+  return lineDrawn;
+}
+
+function useTimelineSpineAndActive(timelineRef, lineDrawn, count) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [spineProgress, setSpineProgress] = useState(0);
+  const rafRef = useRef(0);
+
+  const tick = useCallback(() => {
+    const root = timelineRef.current;
+    if (!root || count < 1) return;
+
+    const items = root.querySelectorAll(".work-timeline-item");
+    if (!items.length) return;
+
+    const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+    const focusY = vh * 0.42;
+    const bandTop = vh * 0.32;
+    const bandBot = vh * 0.55;
+
+    let bestIdx = 0;
+    let bestOverlap = -1;
+    items.forEach((el, i) => {
+      const r = el.getBoundingClientRect();
+      const overlap = Math.max(
+        0,
+        Math.min(r.bottom, bandBot) - Math.max(r.top, bandTop)
+      );
+      if (overlap > bestOverlap) {
+        bestOverlap = overlap;
+        bestIdx = i;
+      }
+    });
+
+    if (bestOverlap < 8) {
+      let bestDist = Infinity;
+      items.forEach((el, i) => {
+        const r = el.getBoundingClientRect();
+        const cy = r.top + r.height * 0.38;
+        const d = Math.abs(cy - focusY);
+        if (d < bestDist) {
+          bestDist = d;
+          bestIdx = i;
+        }
+      });
+    }
+
+    setActiveIndex((prev) => (prev === bestIdx ? prev : bestIdx));
+
+    const first = items[0].getBoundingClientRect();
+    const last = items[items.length - 1].getBoundingClientRect();
+    const span = last.bottom - first.top;
+    let nextP = 0;
+    if (span > 24) {
+      nextP = clamp01((focusY - first.top) / span);
+    }
+    setSpineProgress((prev) =>
+      Math.abs(prev - nextP) < 0.008 ? prev : nextP
+    );
+  }, [timelineRef, count]);
+
+  useLayoutEffect(() => {
+    if (!lineDrawn) return undefined;
+    const run = () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    run();
+    window.addEventListener("scroll", run, { passive: true });
+    window.addEventListener("resize", run);
+    return () => {
+      window.removeEventListener("scroll", run);
+      window.removeEventListener("resize", run);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [lineDrawn, tick]);
+
+  return { activeIndex, spineProgress };
+}
+
+function TimelineRow({
+  index,
+  job,
+  isLast,
+  isActive,
+  stepNumber,
+  lastIdx,
+  dotBtnRefs,
+}) {
+  const [ref, rowVisible] = useRevealOnce(0.08, "0px 0px -8% 0px");
+  const anchorId = `work-role-${job.key}`;
+  const [pulse, setPulse] = useState(false);
+  const pulseTimer = useRef(0);
+
+  const onDotActivate = useCallback(() => {
+    scrollToRole(anchorId);
+  }, [anchorId]);
+
+  const onDotClick = useCallback(() => {
+    onDotActivate();
+    setPulse(true);
+    if (pulseTimer.current) window.clearTimeout(pulseTimer.current);
+    pulseTimer.current = window.setTimeout(() => setPulse(false), 700);
+  }, [onDotActivate]);
+
+  useEffect(() => {
+    return () => {
+      if (pulseTimer.current) window.clearTimeout(pulseTimer.current);
+    };
+  }, []);
+
+  const onDotKeyDown = useCallback(
+    (e) => {
+      if (e.key === "ArrowDown" && index < lastIdx) {
+        e.preventDefault();
+        dotBtnRefs.current[index + 1]?.focus();
+      } else if (e.key === "ArrowUp" && index > 0) {
+        e.preventDefault();
+        dotBtnRefs.current[index - 1]?.focus();
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        dotBtnRefs.current[0]?.focus();
+      } else if (e.key === "End") {
+        e.preventDefault();
+        dotBtnRefs.current[lastIdx]?.focus();
+      }
+    },
+    [index, lastIdx, dotBtnRefs]
+  );
+
+  const tipTitle =
+    job.title.length > 28 ? `${job.title.slice(0, 26)}…` : job.title;
+
+  return (
+    <div
+      ref={ref}
+      className={`work-timeline-item ${rowVisible ? "work-timeline-item--visible" : ""} ${isActive ? "work-timeline-item--active" : ""}`}
+      style={{ "--work-row-index": index }}
+    >
+      <div className="work-timeline-track">
+        <span className="work-timeline-step-badge" aria-hidden>
+          {String(stepNumber).padStart(2, "0")}
+        </span>
+        <button
+          type="button"
+          ref={(el) => {
+            dotBtnRefs.current[index] = el;
+          }}
+          className={`work-timeline-dot-btn ${pulse ? "work-timeline-dot-btn--pulse" : ""}`}
+          aria-label={`${job.title}. ${job.title3}. Activate to scroll to details. Use arrow keys to move between roles, Home and End for ends.`}
+          aria-current={isActive ? "step" : undefined}
+          aria-controls={anchorId}
+          onClick={onDotClick}
+          onKeyDown={onDotKeyDown}
+        >
+          <span className="work-timeline-dot-tip" aria-hidden>
+            <span className="work-timeline-dot-tip-title">{tipTitle}</span>
+            <span className="work-timeline-dot-tip-dates">{job.title3}</span>
+          </span>
+          <span className="work-timeline-dot" aria-hidden />
+        </button>
+        {!isLast ? (
+          <div className="work-timeline-connector" aria-hidden>
+            <span className="work-timeline-connector-flow" aria-hidden />
+          </div>
+        ) : null}
+      </div>
+      <div className="work-timeline-card-wrap">
+        <WorkCard
+          imgPath={job.imgPath}
+          title={job.title}
+          title2={job.title2}
+          title3={job.title3}
+          bullets={job.bullets}
+          tags={job.tags}
+          revealed={rowVisible}
+          animationDelay={`${index * 95}ms`}
+          rowIndex={index}
+          anchorId={anchorId}
+        />
+      </div>
+    </div>
+  );
+}
+
+function Work() {
+  const [headRef, headVisible] = useRevealOnce(0.25, "0px 0px 0px 0px");
+  const timelineRef = useRef(null);
+  const lineDrawn = useTimelineLineDrawn(timelineRef);
+  const lastIdx = EXPERIENCES.length - 1;
+  const dotBtnRefs = useRef([]);
+
+  const { activeIndex, spineProgress } = useTimelineSpineAndActive(
+    timelineRef,
+    lineDrawn,
+    EXPERIENCES.length
+  );
+
   return (
     <Container fluid className="work-section">
       <Particle />
       <Container>
-      <h1 className="project-heading">
-          Work <strong className="purple">Experience </strong>
-        </h1>
-          <Row style={{ justifyContent: "center", padding: "10px" }}>
-            <Col md={9} className="work-card">
-              <WorkCard
-                imgPath={goldman}
-                isBlog={false}
-                title="Goldman Sachs"
-                title2 = "Associate [Software Engineer]"
-                title3 = "September 2024 - Present"
-                // description= "Department: SOC/Consumer Cloud Service Competence Center. Risk Control Tag Development: Development, analysis and deployment of various Payment Risk Control Tags in HiveQL by querying datasets stored in the HDFS. Offline machine learning models/ Scoring Systems: Design, analysis, development and deployment of around 10 risk detection models and scoring systems with greater than 92% accuracy. AI Devops: Troubleshooted issues related to data synchronisation from the HIVE datasets HDFS path to the DevOps HDFS path, MTP model training issues and MEP model deployment issues in the new AIdevops portal. Handled communication between several teams for troubleshooting of models deployment involving several tools such as CloudDragon, AIdevops etc.,"
-                description = "Developed parallelized Data Ingestion pipelines in Python for streaming security telemetry (Prisma, Microsoft Graph, Servicenow etc.) via API endpoints into Kafka, with pagination, delivery callbacks, and DLQ retries to reliably process billions of events in real time. Developed a React app that injects synthetic events into Kafka for testing, speeding up detection query validation by 60%. Designed and implemented a Spark-based SDLC framework using Python to deploy batch and streaming SQL detection queries on Kafka/S3, with jobs running on YARN/Kubernetes, automating detection deployments and improving deployment speed by 100%. Built a Spark Structured Streaming ETL pipeline on YARN to ingest and normalize unstructured data from Kafka, applying schema enforcement, de-duplication, and noise filtering to improve query reliability by 30% and reduce false positives by 20%. Migrated Splunk logs to Google BigQuery using Kafka and Logstash, and built a framework to automate lookup table sync from ECS to BigQuery, reducing manual effort by 70% and ensuring consistent deployments."
-              />
-            </Col>
+        <header
+          ref={headRef}
+          className={`work-page-head ${headVisible ? "work-page-head--visible" : ""}`}
+        >
+          <h1 className="project-heading work-page-title">
+            Work <strong className="purple">experience</strong>
+          </h1>
+          <p className="work-page-lead">
+            Worked on building and improving production-grade software and data systems.
+          </p>
+        </header>
+
+        <Row className="justify-content-center work-timeline-row-wrap">
+          <Col lg={10} md={11}>
+            <nav
+              className={`work-timeline ${lineDrawn ? "work-timeline--line-drawn" : ""}`}
+              ref={timelineRef}
+              aria-label="Work history timeline"
+              style={{
+                "--work-spine-progress": String(spineProgress),
+              }}
+            >
+              <div className="work-timeline-line" aria-hidden />
+              <div className="work-timeline-progress" aria-hidden />
+              <p className="work-timeline-sr-hint visually-hidden">
+                Timeline controls: use Tab to reach a dot, Arrow up and down
+                to jump between roles, Home and End for first and last role.
+                Enter or Space scrolls the matching card into view.
+              </p>
+              {EXPERIENCES.map((job, idx) => (
+                <TimelineRow
+                  key={job.key}
+                  index={idx}
+                  job={job}
+                  isLast={idx === lastIdx}
+                  isActive={idx === activeIndex}
+                  stepNumber={idx + 1}
+                  lastIdx={lastIdx}
+                  dotBtnRefs={dotBtnRefs}
+                />
+              ))}
+            </nav>
+          </Col>
         </Row>
-        <Row style={{ justifyContent: "center", padding: "10px" }}>
-            <Col md={9} className="work-card">
-              <WorkCard
-                imgPath={huawei}
-                isBlog={false}
-                title="Huawei Technologies India Pvt. Ltd."
-                title2 = "Senior Software Engineer"
-                title3 = "August 2020 - July 2022"
-                // description= "Department: SOC/Consumer Cloud Service Competence Center. Risk Control Tag Development: Development, analysis and deployment of various Payment Risk Control Tags in HiveQL by querying datasets stored in the HDFS. Offline machine learning models/ Scoring Systems: Design, analysis, development and deployment of around 10 risk detection models and scoring systems with greater than 92% accuracy. AI Devops: Troubleshooted issues related to data synchronisation from the HIVE datasets HDFS path to the DevOps HDFS path, MTP model training issues and MEP model deployment issues in the new AIdevops portal. Handled communication between several teams for troubleshooting of models deployment involving several tools such as CloudDragon, AIdevops etc.,"
-                description = "Developed and automated 30 Hive tasks to analyze logs and generate tags/features, streamlining workflows in the WiseOper portal. Designed and developed 11 risk detection models in Python, utilizing ML libraries for high accuracy. Orchestrated over 100 Hive tasks for feature calculation, contributing to improved risk assessment with over 92% accuracy. Took ownership of configuring end-to-end DevOps for ML models, reducing development time by more than 60%. Resolved resource allocation, docker images, and model deployment issues in AIdevops MTP environments. Developed 20+ components to manage requests for deployed ML models, handling version deployments and ensuring seamless service delivery. Oversaw service deployments in the AIdevops MEP Production environment, ensuring efficient resource and AZ allocation. Collaborated effectively with cross-functional teams to troubleshoot DevOps issues during Model Deployment. Thoroughly documented end-to-end processes and rulebooks for AIdevops, providing clear guidelines for ML model deployment and management."
-              />
-            </Col>
-        </Row>
-        <Row style={{ justifyContent: "center", padding: "10px",paddingBottom: "10px" }}>
-            <Col md={9} className="work-card">
-              <WorkCard
-                imgPath={ittiam}
-                isBlog={false}
-                title="Ittiam Systems Pvt. Ltd."
-                title2 = "Computer Vision Intern"
-                title3 = "May 2019 - July 2019"
-                description="Project: Enhancement of foreground detection and background modeling in videos using the OpenCV library
-                Implementation: Explored diverse solutions to enhance foreground detection & background modeling. Achieved more than 50%
-                accuracy improvement on the datasets by interpreting histogram peaks and valleys of the motion. Utilized C++ (vectors) and Python (numpy) for efficient video data-sets processing."
-                // ghLink="https://github.com/soumyajit4419/Chatify"
-                // demoLink=""
-              />
-            </Col>
-        </Row>
-
-        <Row style={{ justifyContent: "center", padding: "10px",paddingBottom: "10px" }}>
-            <Col md={9} className="work-card">
-              <WorkCard
-                imgPath={tamu}
-                isBlog={false}
-                title="Texas A&M University"
-                title2 = "Graduate Assistant - High Performance Computing"
-                title3 = "Nov 2023 - May 2024"
-                description = "As a Graduate Assistant at Texas A&M University's High Performance Research Computing Department, I handled tickets related to HPC systems, provided support and resolved issues alongside benchmarking quantum mechanics codes on MemVerge for optimal performance."
-                // ghLink="https://github.com/soumyajit4419/Chatify"
-                // demoLink=""
-              />
-            </Col>
-        </Row>
-
-        <Row style={{ justifyContent: "center", padding: "10px",paddingBottom: "10px" }}>
-            <Col md={9} className="work-card">
-              <WorkCard
-                imgPath={tamu}
-                isBlog={false}
-                title="Texas A&M University"
-                title2 = "Student Technitian - Web Developer/ Tester"
-                title3 = "July 2023 - Nov 2023"
-                description = "As a Student Technician, I excel in web development, testing, and technical support, leveraging Microsoft Azure, Kentico, C#, ASP.NET, MVC, IIS Web Server, and Content Management Systems. I specialize in CMS for University websites, ensuring their smooth operation and scalability. Connecting with clients, I efficiently resolve issues, delivering exceptional support and user experiences."
-                // ghLink="https://github.com/soumyajit4419/Chatify"
-                // demoLink=""
-              />
-            </Col>
-        </Row>
-
-        <Row style={{ justifyContent: "center", padding: "10px",paddingBottom: "10px" }}>
-            <Col md={9} className="work-card">
-              <WorkCard
-                imgPath={tamu}
-                isBlog={false}
-                title="Texas A&M University"
-                title2 = "Student Assistant - Computer Science Grader"
-                title3 = "Jan 2023 - May 2023"
-                description="I had the privilege of assisting with exams and assignments for CSCE 411, the Design and Analysis of Algorithms course, at Texas A&M University, Department of Computer Science, under the guidance of Prof. Timothy Davis. It was a rewarding experience, supporting students in their academic journey and ensuring fair evaluation of their work. Collaborating with Prof. Davis enriched my understanding of algorithmic principles. "
-                // ghLink="https://github.com/soumyajit4419/Chatify"
-                // demoLink=""
-              />
-            </Col>
-        </Row>
-
-
-
-        {/* <Techstack /> */}
-
-
-        {/* <Github /> */}
       </Container>
-      
     </Container>
   );
 }
 
-export default About;
+export default Work;

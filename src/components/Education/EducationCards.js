@@ -1,33 +1,39 @@
-
 import React from "react";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import { CgWebsite } from "react-icons/cg";
-import { BsGithub } from "react-icons/bs";
 
 function EducationCards(props) {
+  const { imgPath, title, title2, description, accent } = props;
+  const accentKey =
+    accent === "tamu" || accent === "nit" ? accent : "default";
   return (
-    <Card className="education-card-view">
-      <div className="row">
-        <div className="col-md-3">
-          <Card.Img variant="top" src={props.imgPath} alt="card-img" className="card-image" />
+    <article
+      className={`edu-degree-card edu-degree-card--${accentKey}`}
+      aria-label={typeof title === "string" ? title.replace(/&amp;/g, "&") : undefined}
+    >
+      <div className="edu-degree-card__inner">
+        <div className="edu-degree-card__media">
+          <div className="edu-degree-card__logo-frame">
+            <img
+              src={imgPath}
+              alt=""
+              className="edu-degree-card__logo"
+              loading="lazy"
+              decoding="async"
+              width={112}
+              height={112}
+            />
+          </div>
         </div>
-        <div className="col-md-8 d-flex align-items-center">
-          <Card.Body style={{ textAlign: "center" }}>
-            <Card.Title>{props.title}</Card.Title>
-            <Card.Title>{props.title2}</Card.Title>
-            <Card.Title>{props.title3}</Card.Title>
-            {/* <Card.Subtitle className="mb-2 text-muted">{props.subtitle}</Card.Subtitle> */}
-            <Card.Text style={{ textAlign: "center" }}>
-              {props.description}
-            </Card.Text>
-          </Card.Body>
+        <div className="edu-degree-card__body">
+          <h3 className="edu-degree-school">{title}</h3>
+          <p className="edu-degree-program">{title2}</p>
+          {props.title3 ? (
+            <p className="edu-degree-extra">{props.title3}</p>
+          ) : null}
+          <p className="edu-degree-dates">{description}</p>
         </div>
       </div>
-    </Card>
+    </article>
   );
 }
 
 export default EducationCards;
-
-

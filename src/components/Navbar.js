@@ -42,6 +42,7 @@ function NavBar() {
 
   return (
     <Navbar
+      id="app-navbar"
       expanded={expand}
       fixed="top"
       expand="md"
