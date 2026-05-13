@@ -279,6 +279,11 @@ html {
 
 #app-navbar .app-navbar-toggler {
   position: relative !important;
+  display: inline-flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
   padding: 0.55rem 0.65rem !important;
   border-radius: 999px !important;
   border: 1px solid rgba(9, 64, 103, 0.12) !important;
@@ -302,20 +307,15 @@ html {
 #app-navbar .navbar-toggler span,
 #app-navbar .app-navbar-toggler span {
   display: block !important;
+  flex-shrink: 0 !important;
   background: linear-gradient(90deg, #094067, #3da9fc) !important;
   height: 3px !important;
   width: 22px !important;
-  margin-top: 4px !important;
-  margin-bottom: 4px !important;
+  margin: 0 !important;
   border-radius: 3px !important;
   transform: rotate(0deg) !important;
   opacity: 1 !important;
   transition: transform 0.3s ease, opacity 0.25s ease !important;
-}
-
-#app-navbar .navbar-toggler span:first-child,
-#app-navbar .app-navbar-toggler span:first-child {
-  margin-top: 0 !important;
 }
 
 #app-navbar .navbar-toggler:not(.collapsed) span:nth-child(1),
@@ -373,8 +373,10 @@ html {
     padding: 0 !important;
     border-radius: 50% !important;
     display: inline-flex !important;
+    flex-direction: column !important;
     align-items: center;
     justify-content: center;
+    gap: 4px !important;
     flex-shrink: 0;
   }
 
