@@ -159,6 +159,10 @@ html {
   .app-navbar-backdrop {
     display: none !important;
   }
+
+  #app-navbar .navbar-toggler {
+    display: none !important;
+  }
 }
 
 @keyframes appNavBackdropIn {
@@ -277,13 +281,9 @@ html {
   opacity: 1;
 }
 
+/* Omit display: flex here so Bootstrap can hide the toggler from md breakpoint up. */
 #app-navbar .app-navbar-toggler {
   position: relative !important;
-  display: inline-flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 4px !important;
   padding: 0.55rem 0.65rem !important;
   border-radius: 999px !important;
   border: 1px solid rgba(9, 64, 103, 0.12) !important;

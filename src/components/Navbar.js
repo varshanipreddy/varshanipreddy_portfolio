@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
@@ -35,6 +35,9 @@ function NavBar() {
   const [expand, setExpand] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const wasDesktopRef = useRef(
+    typeof window !== "undefined" ? window.innerWidth >= 768 : true
+  );
 
   useEffect(() => {
     setExpand(false);
@@ -50,27 +53,22 @@ function NavBar() {
   }, []);
 
   useEffect(() => {
-    if (!expand) return undefined;
+    const onResize = () => {
+      const desktop = window.innerWidth >= 768;
+      if (desktop && !wasDesktopRef.current) setExpand(false);
+      wasDesktopRef.current = desktop;
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
+  useEffect(() => {
+    if (!expand) return undefined;
     const onKey = (e) => {
       if (e.key === "Escape") setExpand(false);
     };
     document.addEventListener("keydown", onKey);
-
-    const mq = window.matchMedia("(max-width: 767px)");
-    const lock = () => {
-      if (mq.matches) {
-        document.body.style.overflow = "hidden";
-      }
-    };
-    lock();
-    mq.addEventListener("change", lock);
-
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-      mq.removeEventListener("change", lock);
-    };
+    return () => document.removeEventListener("keydown", onKey);
   }, [expand]);
 
   const navShellClass = [
@@ -94,6 +92,7 @@ function NavBar() {
       <Navbar
         id="app-navbar"
         expanded={expand}
+        onToggle={setExpand}
         fixed="top"
         expand="md"
         className={navShellClass}
@@ -113,13 +112,15 @@ function NavBar() {
             aria-expanded={expand}
             aria-label={expand ? "Close menu" : "Open menu"}
             className="app-navbar-toggler app-navbar-menu-btn"
-            onClick={() => setExpand((e) => !e)}
           >
             <span />
             <span />
             <span />
           </Navbar.Toggle>
-          <Navbar.Collapse id="responsive-navbar-nav">
+          <Navbar.Collapse
+            id="responsive-navbar-nav"
+            timeout={{ enter: 0, exit: 200 }}
+          >
             <Nav className="ms-auto app-navbar-nav">
               {NAV_ITEMS.map(({ to, label, Icon, end }, index) => {
                 const active = pathMatches(location.pathname, to, end);
