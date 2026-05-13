@@ -306,19 +306,32 @@ button:focus {
 
 @media (max-width: 768px) {
   .home-content {
-    padding: 5rem 1rem 2rem !important;
+    padding: 4rem 1rem 2rem !important;
+  }
+  .home-header {
+    text-align: center;
   }
   .heading {
     font-size: 2.1em !important;
+    text-align: center;
   }
   .heading-name {
     font-size: 2.2em !important;
+    text-align: center;
   }
-  .home-buttons {
-    justify-content: center;
+  .home-hero-description {
+    margin: 1.5rem auto;
+    max-width: 100%;
+    text-align: center;
   }
   .home-avatar {
     transform: none;
+    margin: 1.5rem auto 0;
+  }
+  .home-avatar img {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
   }
 }
 
@@ -547,6 +560,43 @@ button:focus {
   transform: scale(1.02) !important;
   overflow: hidden !important;
   box-shadow: 0 4px 4px 5px #3da9fc!important;
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0 1.2rem;
+  justify-content: center;
+}
+
+.tech-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(9, 64, 103, 0.08);
+  color: #094067;
+  font-size: 0.85rem;
+  font-weight: 500;
+  animation: fadeInUp 0.45s ease forwards;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  line-height: 1;
+}
+
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .blog-card {
