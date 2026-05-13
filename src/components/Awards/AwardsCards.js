@@ -1,33 +1,41 @@
-
 import React from "react";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import { CgWebsite } from "react-icons/cg";
-import { BsGithub } from "react-icons/bs";
+import { FaAward } from "react-icons/fa";
 
-function AwardsCards(props) {
+function AwardsCards({
+  imgPath,
+  title,
+  issuer,
+  description,
+  variant = "default",
+  index = 0,
+}) {
+  const v =
+    variant === "huawei" || variant === "tamu" ? variant : "default";
+
   return (
-    <Card className="education-card-view">
-      <div className="row">
-        <div className="col-md-3">
-          <Card.Img variant="top" src={props.imgPath} alt="card-img" className="card-image" />
+    <article
+      className={`award-card award-card--${v}`}
+      style={{ "--award-stagger": `${index * 90}ms` }}
+    >
+      <div className="award-card__inner">
+        <div className="award-card__media">
+          <div className="award-card__logo-frame">
+            <img src={imgPath} alt="" className="award-card__logo" loading="lazy" />
+          </div>
         </div>
-        <div className="col-md-8 d-flex align-items-center">
-          <Card.Body style={{ textAlign: "center" }}>
-            <Card.Title>{props.title}</Card.Title>
-            <Card.Title>{props.title2}</Card.Title>
-            <Card.Title>{props.title3}</Card.Title>
-            {/* <Card.Subtitle className="mb-2 text-muted">{props.subtitle}</Card.Subtitle> */}
-            <Card.Text style={{ textAlign: "justify" }}>
-              {props.description}
-            </Card.Text>
-          </Card.Body>
+        <div className="award-card__body">
+          <div className="award-card__title-row">
+            <h2 className="award-card__title">{title}</h2>
+            <span className="award-card__badge" aria-hidden title="Award">
+              <FaAward />
+            </span>
+          </div>
+          <p className="award-card__issuer">{issuer}</p>
+          <p className="award-card__description">{description}</p>
         </div>
       </div>
-    </Card>
+    </article>
   );
 }
 
 export default AwardsCards;
-
-
