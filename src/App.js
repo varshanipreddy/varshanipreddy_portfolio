@@ -9,7 +9,6 @@ import Footer from "./components/Footer";
 import Education from "./components/Education/Education";
 import Work from "./components/Work/Work"
 import Skills from "./components/Skills/Skills"
-import Certs from "./components/Certs/Certs"
 import {
   HashRouter as Router,
   Route,
@@ -45,8 +44,10 @@ function App() {
           <Route path="/education" element={<Education />} />
           <Route path="/work" element={<Work />} />
           <Route path="/skills" element={<Skills />} />
+          <Route path="/Skills" element={<Skills />} />
           <Route path="/awards" element={<Awards />} />
-          <Route path="/certificates" element={<Certs />} />
+          <Route path="/certificates" element={<Navigate to="/skills" replace />} />
+          <Route path="/Certificates" element={<Navigate to="/skills" replace />} />
           <Route path="*" element={<Navigate to="/"/>} />
         </Routes>
         <Footer />

@@ -20,7 +20,6 @@ import {
   AiOutlineBook,
   AiOutlineBriefcase,
   IoCodeSlash,
-  AiOutlineSafetyCertificate,
   AiOutlineGraduationCap
 } from "react-icons/ai";
 
@@ -104,20 +103,10 @@ function NavBar() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/Skills"
+                to="/skills"
                 onClick={() => updateExpanded(false)}
               >
-                <AiOutlineCode style={{ marginBottom: "2px" }} /> Skills
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to="/certificates"
-                onClick={() => updateExpanded(false)}
-              >
-                <AiOutlineSafetyCertificate style={{ marginBottom: "2px" }} /> Certs
+                <AiOutlineCode style={{ marginBottom: "2px" }} /> Skills &amp; certs
               </Nav.Link>
             </Nav.Item>
 
