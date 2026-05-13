@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/varshanipreddy_portfolio/static/css/main.c2d40450.css",
+    "main.js": "/varshanipreddy_portfolio/static/js/main.acac2bed.js",
+    "static/js/787.1ed0c42c.chunk.js": "/varshanipreddy_portfolio/static/js/787.1ed0c42c.chunk.js",
+    "static/media/genq1.png": "/varshanipreddy_portfolio/static/media/genq1.53b043b61ae85df1d5be.png",
+    "static/media/ittiam.png": "/varshanipreddy_portfolio/static/media/ittiam.7d4b06ed4555bfb85098.png",
+    "static/media/about.png": "/varshanipreddy_portfolio/static/media/about.5a40f5449357647f2537.png",
+    "static/media/tamu.png": "/varshanipreddy_portfolio/static/media/tamu.5a40f5449357647f2537.png",
+    "static/media/chat.png": "/varshanipreddy_portfolio/static/media/chat.1f19fcea49a6ae4ef6e7.png",
+    "static/media/p3.jpeg": "/varshanipreddy_portfolio/static/media/p3.b7b94901cb767a14f229.jpeg",
+    "static/media/mnist.png": "/varshanipreddy_portfolio/static/media/mnist.a1672499ded93dd0d8cf.png",
+    "static/media/fridge.png": "/varshanipreddy_portfolio/static/media/fridge.2460f96fccea967b6f7e.png",
+    "static/media/vote.png": "/varshanipreddy_portfolio/static/media/vote.98218b2f1917d0dac42e.png",
+    "static/media/nitrr.png": "/varshanipreddy_portfolio/static/media/nitrr.53d3b2233f4ae64cc42d.png",
+    "static/media/Huawei.png": "/varshanipreddy_portfolio/static/media/Huawei.79b72ec6ea0a19be4b12.png",
+    "static/media/Goldman_Sachs.png": "/varshanipreddy_portfolio/static/media/Goldman_Sachs.eefbac465616650867da.png",
+    "static/media/multiline.png": "/varshanipreddy_portfolio/static/media/multiline.0e38f7ee939139315ec4.png",
+    "static/media/awsccp.png": "/varshanipreddy_portfolio/static/media/awsccp.f685d63a35961ca83875.png",
+    "static/media/crm.png": "/varshanipreddy_portfolio/static/media/crm.d74823915be4cd46e1e7.png",
+    "static/media/udemy.jpg": "/varshanipreddy_portfolio/static/media/udemy.38ffb0a9afe24405317f.jpg",
+    "static/media/pre.svg": "/varshanipreddy_portfolio/static/media/pre.c68b110d7a2d076dacd6.svg",
+    "index.html": "/varshanipreddy_portfolio/index.html",
+    "main.c2d40450.css.map": "/varshanipreddy_portfolio/static/css/main.c2d40450.css.map",
+    "main.acac2bed.js.map": "/varshanipreddy_portfolio/static/js/main.acac2bed.js.map",
+    "787.1ed0c42c.chunk.js.map": "/varshanipreddy_portfolio/static/js/787.1ed0c42c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c2d40450.css",
+    "static/js/main.acac2bed.js"
+  ]
+}
