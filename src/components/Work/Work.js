@@ -65,8 +65,8 @@ function About() {
                 isBlog={false}
                 title="Texas A&M University"
                 title2 = "Graduate Assistant - High Performance Computing"
-                title3 = "Nov 2023 - Present"
-                description = "As a Graduate Assistant at Texas A&M University's High Performance Research Computing Department, I handle tickets related to HPC systems, providing support and resolving issues alongside benchmarking Quantum Mechanics codes on MemVerge for optimal performance."
+                title3 = "Nov 2023 - May 2024"
+                description = "As a Graduate Assistant at Texas A&M University's High Performance Research Computing Department, I handled tickets related to HPC systems, provided support and resolved issues alongside benchmarking quantum mechanics codes on MemVerge for optimal performance."
                 // ghLink="https://github.com/soumyajit4419/Chatify"
                 // demoLink=""
               />

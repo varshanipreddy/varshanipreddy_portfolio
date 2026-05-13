@@ -1,12 +1,9 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
-// import homeLogo from "../../Assets/home-main.svg";
 import homeLogo from "../../Assets/p3.jpeg";
 import Particle from "../Particle";
 import Type from "./Type";
-import { AiFillGithub} from "react-icons/ai";
-import { FaLinkedinIn } from "react-icons/fa";
+import HomeLayers from "./HomeLayers";
 
 function Home() {
   return (
@@ -29,7 +26,7 @@ function Home() {
                 <strong className="main-name"> VARSHANI REDDY PATLOLLA</strong>
               </h1>
 
-              <div style={{ padding: "50px", textAlign: "left" }}>
+              <div className="home-role-slot">
                 <Type />
               </div>
               <p className="home-hero-description">
@@ -58,12 +55,9 @@ function Home() {
             </Col>
 
 
-
-
-
           </Row>
-          
         </Container>
+        <HomeLayers />
       </Container>
       {/* <Home2 /> */}
     </section>
