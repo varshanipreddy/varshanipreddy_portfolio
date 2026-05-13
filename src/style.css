@@ -252,6 +252,13 @@ button:focus {
   width: 100%;
   height: 100%;
   color: #ef4565;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home-content {
+  position: relative;
+  z-index: 2;
 }
 
 .home-header {
@@ -260,7 +267,6 @@ button:focus {
 
 .home-section {
   position: relative;
-  z-index: -1;
   /* background-image: var(--image-gradient), url(./Assets/home-bg.jpg); */
   background-position: top center;
   background-repeat: no-repeat;
@@ -269,19 +275,73 @@ button:focus {
 }
 
 .home-content {
-  padding: 9rem 0 2rem !important;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 7rem 1.5rem 2rem !important;
   color: #5f6c7b;
   text-align: left;
 }
 
+.home-hero-description {
+  font-size: 1.05rem;
+  max-width: 640px;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  color: #4f5d6c;
+}
+
+
+.home-avatar {
+  border-radius: 50%;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  display: inline-block;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.home-avatar:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 26px 55px rgba(0, 0, 0, 0.24);
+}
+
+@media (max-width: 768px) {
+  .home-content {
+    padding: 5rem 1rem 2rem !important;
+  }
+  .heading {
+    font-size: 2.1em !important;
+  }
+  .heading-name {
+    font-size: 2.2em !important;
+  }
+  .home-buttons {
+    justify-content: center;
+  }
+  .home-avatar {
+    transform: none;
+  }
+}
+
 .heading {
   font-size: 2.4em !important;
-  padding-left: 50px !important;
+  padding-left: 0 !important;
 }
 
 .heading-name {
   font-size: 2.5em !important;
-  padding-left: 45px !important;
+  padding-left: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .home-content {
+    padding: 5rem 1rem 2rem !important;
+  }
+  .heading {
+    font-size: 2.1em !important;
+  }
+  .heading-name {
+    font-size: 2.2em !important;
+  }
 }
 
 .main-name {
@@ -771,8 +831,12 @@ button:focus {
 /* Particle.css */
 .particle-container {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none;
+  z-index: 0;
   /* background-color: blue;  */
 }
 
